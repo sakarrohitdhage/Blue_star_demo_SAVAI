@@ -1,0 +1,23 @@
+{
+  "classes": [
+    "Wrinkle",
+    "Pitting",
+    "Punch",
+    "Burr",
+    "Hole",
+    "Spot",
+    "Inclusion",
+    "Corrosion",
+    "Damage",
+    "Crack",
+    "Dent",
+    "Patch",
+    "Scratch",
+    "Rolling",
+    "Cut",
+    "Casting",
+    "Crazing"
+  ],
+  "source": "model:best46.pt",
+  "timestamp": 1749646129.2824605
+}

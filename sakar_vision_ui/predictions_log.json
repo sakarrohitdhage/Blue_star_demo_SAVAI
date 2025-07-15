@@ -1,0 +1,339 @@
+{
+    "metadata": {
+        "created": "2025-07-11T10:51:49.267587",
+        "version": "1.0",
+        "description": "SAKAR Vision AI - Prediction Storage System"
+    },
+    "sessions": {
+        "165b26e7": {
+            "session_info": {
+                "session_id": "165b26e7",
+                "start_time": "2025-07-11T10:54:03.726339",
+                "last_update": "2025-07-11T10:55:34.325878",
+                "total_predictions": 16
+            },
+            "predictions": [
+                {
+                    "id": "e6cb457b-0468-4946-8878-1dd75a259c15",
+                    "timestamp": "2025-07-11T10:54:35.327893",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9787421226501465,
+                    "confidence_percentage": "97.87%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "bdc0109d-8063-4eb5-9e8b-1e4cf0dcfad7",
+                    "timestamp": "2025-07-11T10:54:36.985139",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9882771372795105,
+                    "confidence_percentage": "98.83%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "0dcd792d-38e4-4c6c-8c83-e661499a3218",
+                    "timestamp": "2025-07-11T10:54:37.992618",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9850758910179138,
+                    "confidence_percentage": "98.51%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "70d30879-88cc-4fb5-a4ad-fdcb50309786",
+                    "timestamp": "2025-07-11T10:54:38.833285",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9764798283576965,
+                    "confidence_percentage": "97.65%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "8f087202-253a-4f02-abbe-1d30e4e8b6f3",
+                    "timestamp": "2025-07-11T10:54:45.570563",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9999966621398926,
+                    "confidence_percentage": "100.00%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "eca396b3-313e-409a-8c23-f22f53946c4b",
+                    "timestamp": "2025-07-11T10:54:47.943051",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9999957084655762,
+                    "confidence_percentage": "100.00%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "4fcb626d-a83e-45ed-9752-cbd8c1027ef0",
+                    "timestamp": "2025-07-11T10:54:48.658589",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9999974966049194,
+                    "confidence_percentage": "100.00%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "ac0675a4-58a1-45bc-a687-2377bee5179a",
+                    "timestamp": "2025-07-11T10:54:49.124094",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9999959468841553,
+                    "confidence_percentage": "100.00%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "5365d66d-2f51-413f-85c5-5d4b2cea41fc",
+                    "timestamp": "2025-07-11T10:54:57.032516",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9999287128448486,
+                    "confidence_percentage": "99.99%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "976e04cd-9f4f-463b-b2fa-15be87227e62",
+                    "timestamp": "2025-07-11T10:54:59.101735",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9999494552612305,
+                    "confidence_percentage": "99.99%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "3b1197c6-772c-4446-81e8-344033fe7c15",
+                    "timestamp": "2025-07-11T10:54:59.134276",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9999173879623413,
+                    "confidence_percentage": "99.99%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "ed3b0034-c1f4-4cda-8aac-54960b86d587",
+                    "timestamp": "2025-07-11T10:55:08.294676",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9445804357528687,
+                    "confidence_percentage": "94.46%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "48302c38-45b8-490e-9826-d5b326c9d3e7",
+                    "timestamp": "2025-07-11T10:55:10.035518",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.955828845500946,
+                    "confidence_percentage": "95.58%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "0e1d0c56-311a-4b8b-bd89-b2404165a864",
+                    "timestamp": "2025-07-11T10:55:10.629267",
+                    "session_id": "165b26e7",
+                    "predicted_class": "non_defective",
+                    "confidence": 0.9608156681060791,
+                    "confidence_percentage": "96.08%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "a39a8ab9-a134-4b69-b83e-b0ece15b19d0",
+                    "timestamp": "2025-07-11T10:55:19.976653",
+                    "session_id": "165b26e7",
+                    "predicted_class": "defective",
+                    "confidence": 1.0,
+                    "confidence_percentage": "100.00%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                },
+                {
+                    "id": "2f4400b1-d638-4689-b6a8-ab2a5d0308e6",
+                    "timestamp": "2025-07-11T10:55:20.780748",
+                    "session_id": "165b26e7",
+                    "predicted_class": "defective",
+                    "confidence": 1.0,
+                    "confidence_percentage": "100.00%",
+                    "metadata": {
+                        "device": "cpu",
+                        "session_start": "2025-07-11T10:54:03.726339"
+                    },
+                    "additional_data": {
+                        "model_classes": [
+                            "defective",
+                            "non_defective"
+                        ],
+                        "camera_feed": true,
+                        "ui_component": "real_time_classification"
+                    }
+                }
+            ]
+        }
+    }
+}
