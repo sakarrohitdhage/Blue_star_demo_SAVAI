@@ -1,0 +1,897 @@
+{
+    "export_info": {
+        "exported_at": "2025-07-10T14:12:38.948127",
+        "session_id": "8741ed7b",
+        "source_file": "/home/sakarws03/machine-vision-platform/sakar_vision_ui/predictions_log.json"
+    },
+    "session_data": {
+        "session_info": {
+            "session_id": "8741ed7b",
+            "start_time": "2025-07-10T14:11:44.264142",
+            "last_update": "2025-07-10T14:12:38.947284",
+            "total_predictions": 44
+        },
+        "predictions": [
+            {
+                "id": "7163bc8e-2fd0-4598-aadc-e4bc39bc592f",
+                "timestamp": "2025-07-10T14:11:55.686427",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9901408553123474,
+                "confidence_percentage": "99.01%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "e034fd03-c034-41ac-80c5-1a3187296e60",
+                "timestamp": "2025-07-10T14:11:55.815177",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.985270619392395,
+                "confidence_percentage": "98.53%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "c26ec277-a888-41fc-a1a5-4074bbe62707",
+                "timestamp": "2025-07-10T14:11:56.611475",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9852972626686096,
+                "confidence_percentage": "98.53%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "ec94f9e2-646d-4ff5-beb6-aa0821c30116",
+                "timestamp": "2025-07-10T14:11:57.346652",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9838525056838989,
+                "confidence_percentage": "98.39%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "c197be45-58a6-459a-ab5f-3c3362dd70f5",
+                "timestamp": "2025-07-10T14:11:58.535029",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9854801297187805,
+                "confidence_percentage": "98.55%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "87b60b55-ff28-4854-8745-e4ecd595a5dc",
+                "timestamp": "2025-07-10T14:11:58.878649",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9730501770973206,
+                "confidence_percentage": "97.31%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "9dd3c88f-4a8a-4ba0-942e-114c23bfb56c",
+                "timestamp": "2025-07-10T14:11:59.674948",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9823205471038818,
+                "confidence_percentage": "98.23%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "d773556c-2b6d-4548-a136-de281f9e67fe",
+                "timestamp": "2025-07-10T14:12:00.410628",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9691048860549927,
+                "confidence_percentage": "96.91%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "2a87e6ba-5fe2-4a84-b65e-d7623a5f4ac6",
+                "timestamp": "2025-07-10T14:12:01.541651",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9985679388046265,
+                "confidence_percentage": "99.86%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "e3dd84d5-3b88-470a-a89f-e9a617e25d7b",
+                "timestamp": "2025-07-10T14:12:01.942626",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9953261613845825,
+                "confidence_percentage": "99.53%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "3fcc6f6c-1682-4968-b3a7-6d08bb612e30",
+                "timestamp": "2025-07-10T14:12:02.739026",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9980975985527039,
+                "confidence_percentage": "99.81%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "d25e7b63-f90a-4a93-91b1-1af18d07ef1b",
+                "timestamp": "2025-07-10T14:12:03.536950",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9983779191970825,
+                "confidence_percentage": "99.84%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "05c7a871-553a-416d-b01f-b340eff47cb5",
+                "timestamp": "2025-07-10T14:12:04.542018",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.9541538953781128,
+                "confidence_percentage": "95.42%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "f3c9037f-55f1-46ef-9724-4083f47aa84b",
+                "timestamp": "2025-07-10T14:12:05.006746",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.917386531829834,
+                "confidence_percentage": "91.74%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "927638ab-c443-42ed-9f80-b75a894498d9",
+                "timestamp": "2025-07-10T14:12:05.802830",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.7093539834022522,
+                "confidence_percentage": "70.94%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "ec5adcd1-88f7-4d5c-92fe-ab117139e67d",
+                "timestamp": "2025-07-10T14:12:06.603359",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9722440242767334,
+                "confidence_percentage": "97.22%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "2f17b32b-80cf-44e5-a79f-4430bdace9cc",
+                "timestamp": "2025-07-10T14:12:07.334849",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9982182383537292,
+                "confidence_percentage": "99.82%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "e9f019ef-3636-4bae-81d3-00a9912c6b4b",
+                "timestamp": "2025-07-10T14:12:08.562679",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9986501336097717,
+                "confidence_percentage": "99.87%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "137af8df-a537-4c76-aa75-7ad04ed1d8bb",
+                "timestamp": "2025-07-10T14:12:08.866629",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.998393714427948,
+                "confidence_percentage": "99.84%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "7a50af8a-8f73-4cca-84d4-894b945c25f0",
+                "timestamp": "2025-07-10T14:12:09.634644",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9998964071273804,
+                "confidence_percentage": "99.99%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "432b0e6d-40d2-4c5f-8af4-563e497d507a",
+                "timestamp": "2025-07-10T14:12:10.398609",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9998519420623779,
+                "confidence_percentage": "99.99%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "a5aea83c-64bc-48b3-840f-7abb8d97493b",
+                "timestamp": "2025-07-10T14:12:12.124440",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999971389770508,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "97386975-18e3-487b-ae1b-e2a32dd8c6f2",
+                "timestamp": "2025-07-10T14:12:12.131323",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999995231628418,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "91da1445-6ba7-40ba-883f-cd975477d9a7",
+                "timestamp": "2025-07-10T14:12:12.698714",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999995231628418,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "3189e833-b0d7-407b-a863-7e04ee652cec",
+                "timestamp": "2025-07-10T14:12:14.825131",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999992847442627,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "14eff99e-1b5c-4d24-95ac-3acb6c534e0b",
+                "timestamp": "2025-07-10T14:12:14.831002",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999979734420776,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "4abfca26-a201-418c-84bf-8deb20c9258f",
+                "timestamp": "2025-07-10T14:12:15.405153",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9996252059936523,
+                "confidence_percentage": "99.96%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "e6196939-8fcb-40b9-b2cc-358ef636fc4a",
+                "timestamp": "2025-07-10T14:12:15.762670",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9968336224555969,
+                "confidence_percentage": "99.68%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "8a1ee896-2fdf-4f9c-aaea-a109f586c591",
+                "timestamp": "2025-07-10T14:12:16.530392",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9879710078239441,
+                "confidence_percentage": "98.80%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "c2ae1469-34a3-4903-b66d-dc27050408f7",
+                "timestamp": "2025-07-10T14:12:17.294892",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.8835727572441101,
+                "confidence_percentage": "88.36%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "f6a33d2f-6eaa-4cd7-8036-3201018ce215",
+                "timestamp": "2025-07-10T14:12:18.574005",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 1.0,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "ea1e2174-b076-477c-92d5-ccb1123845e5",
+                "timestamp": "2025-07-10T14:12:18.826559",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.999931812286377,
+                "confidence_percentage": "99.99%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "81f229d0-c39c-4937-b328-bf9bd195be25",
+                "timestamp": "2025-07-10T14:12:19.590681",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999040365219116,
+                "confidence_percentage": "99.99%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "8bed0129-e5bc-43c5-88a9-c9e750f58ce4",
+                "timestamp": "2025-07-10T14:12:20.358746",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999749660491943,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "b4c34c7e-e23c-4fe0-bb73-b79296f0f1bd",
+                "timestamp": "2025-07-10T14:12:21.553150",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999878406524658,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "330f2d6d-7319-42bc-a7f1-67f610180970",
+                "timestamp": "2025-07-10T14:12:21.890776",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999740123748779,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "a40f4262-bba3-4220-a8eb-d2d87139ca32",
+                "timestamp": "2025-07-10T14:12:22.654727",
+                "session_id": "8741ed7b",
+                "predicted_class": "defective",
+                "confidence": 0.851051926612854,
+                "confidence_percentage": "85.11%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "1eb3fe31-b99b-4427-b0ab-93331c3dd5f6",
+                "timestamp": "2025-07-10T14:12:23.507967",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.996459424495697,
+                "confidence_percentage": "99.65%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "4ce24707-4c94-41b4-9057-8f088602bdb5",
+                "timestamp": "2025-07-10T14:12:24.520885",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.999996542930603,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "37f7a970-5394-4657-88f3-d7d9245a919d",
+                "timestamp": "2025-07-10T14:12:24.954711",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999926090240479,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "e0f8244e-6f84-4f1b-ae49-ef99d312e106",
+                "timestamp": "2025-07-10T14:12:25.718570",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999947547912598,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "032b2d92-ed8e-4a75-8b07-d894c4ca7911",
+                "timestamp": "2025-07-10T14:12:26.564724",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999997615814209,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "9a500938-de3b-4145-8f7b-c7e665b33fb7",
+                "timestamp": "2025-07-10T14:12:27.250696",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.999996542930603,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            },
+            {
+                "id": "0b7b5ca6-f08c-4084-b71e-041a286e3bfc",
+                "timestamp": "2025-07-10T14:12:28.018790",
+                "session_id": "8741ed7b",
+                "predicted_class": "non_defective",
+                "confidence": 0.9999969005584717,
+                "confidence_percentage": "100.00%",
+                "metadata": {
+                    "device": "cuda",
+                    "session_start": "2025-07-10T14:11:44.264142"
+                },
+                "additional_data": {
+                    "model_classes": [
+                        "defective",
+                        "non_defective"
+                    ],
+                    "camera_feed": true,
+                    "ui_component": "real_time_classification"
+                }
+            }
+        ]
+    }
+}

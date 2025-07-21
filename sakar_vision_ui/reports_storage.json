@@ -1,41 +1,5 @@
 [
     {
-        "timestamp": "2025-06-10T15:32:31.639383",
-        "defect_counts": {
-            "Hole": 7
-        },
-        "material_counts": {},
-        "total_defects": 7,
-        "threshold_value": 0
-    },
-    {
-        "timestamp": "2025-06-10T15:32:31.903219",
-        "defect_counts": {
-            "Hole": 7
-        },
-        "material_counts": {},
-        "total_defects": 7,
-        "threshold_value": 0
-    },
-    {
-        "timestamp": "2025-06-10T15:32:33.200434",
-        "defect_counts": {
-            "Hole": 7
-        },
-        "material_counts": {},
-        "total_defects": 7,
-        "threshold_value": 0
-    },
-    {
-        "timestamp": "2025-06-10T15:32:33.448223",
-        "defect_counts": {
-            "Hole": 7
-        },
-        "material_counts": {},
-        "total_defects": 7,
-        "threshold_value": 0
-    },
-    {
         "timestamp": "2025-06-10T15:32:33.705234",
         "defect_counts": {
             "Hole": 7
@@ -8997,6 +8961,42 @@
         },
         "material_counts": {},
         "total_defects": 1,
+        "threshold_value": 0
+    },
+    {
+        "timestamp": "2025-06-12T16:10:21.001682",
+        "defect_counts": {
+            "Punch": 1
+        },
+        "material_counts": {},
+        "total_defects": 1,
+        "threshold_value": 0
+    },
+    {
+        "timestamp": "2025-06-12T16:10:21.006859",
+        "defect_counts": {
+            "Spot": 2
+        },
+        "material_counts": {},
+        "total_defects": 2,
+        "threshold_value": 0
+    },
+    {
+        "timestamp": "2025-06-12T16:10:21.610377",
+        "defect_counts": {
+            "Spot": 2
+        },
+        "material_counts": {},
+        "total_defects": 2,
+        "threshold_value": 0
+    },
+    {
+        "timestamp": "2025-06-12T16:10:21.811956",
+        "defect_counts": {
+            "Spot": 2
+        },
+        "material_counts": {},
+        "total_defects": 2,
         "threshold_value": 0
     }
 ]

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SAKAR VISION AI - Image Classification UI Module with Prediction Storage
+SAKAR VISION AI - Enhanced Image Classification UI Module with Prediction Storage
 
 OVERVIEW:
 This module implements a sophisticated real-time image classification interface for the Sakar Vision AI platform, 
@@ -9,33 +9,14 @@ classification capabilities. It provides a professional dual-dashboard architect
 classification results in real-time, enabling users to validate AI model performance and ensure accurate defect 
 detection with comprehensive statistical tracking and session persistence for manufacturing inspection workflows.
 
-NEW FEATURE: Comprehensive Prediction Storage System
-- Stores all predictions with detailed metadata in JSON format
-- Automatic prediction logging with timestamps and confidence scores
-- Prediction history management with configurable limits
-- Export capabilities for analysis and reporting
-- Session-based prediction tracking with unique identifiers
-
-KEY FUNCTIONALITY:
-The system features advanced PyTorch-based image classification with MobileNetV2 architecture and GPU acceleration 
-support, sophisticated dual-dashboard interface with separate monitoring for defective and non-defective classifications, 
-real-time camera feed integration with configurable camera index selection and optimized frame processing, and intelligent 
-model management with automatic detection and loading of the latest trained models from the project directory. It includes 
-comprehensive classification statistics tracking with recent classification history, confidence scoring, and timestamp 
-logging, dynamic UI updates with color-coded confidence indicators and real-time prediction displays, robust session 
-state management with automatic persistence of user interactions and UI states, and seamless integration with other 
-platform modules through QStackedWidget navigation and shared model repositories.
-
-TECHNICAL ARCHITECTURE:
-Built using PyQt5 with advanced multi-threading architecture for non-blocking camera operations and inference processing, 
-the module employs OpenCV for camera management with optimized frame buffering and configurable camera index selection, 
-comprehensive PyTorch integration with CUDA acceleration support and efficient model loading with checkpoint management. 
-The architecture features sophisticated worker thread implementation (CameraWorker) with proper signal-slot communication 
-for thread-safe UI updates, modular dashboard components (ClassificationDashboard) with real-time statistics tracking 
-and professional styling, intelligent model discovery with automatic loading of latest trained models and comprehensive 
-error handling for model compatibility, and robust session persistence with JSON-based state management for maintaining 
-user workflow continuity across application sessions. The system includes advanced image preprocessing with proper aspect 
-ratio maintenance and optimized transform pipelines for accurate classification results.
+ENHANCED FEATURES:
+- Automatic loading of best_model.pth from current directory
+- Comprehensive prediction storage system with JSON export
+- Intelligent class name detection from model checkpoints
+- Motion detection for stable frame prediction
+- Dual dashboard interface for defective/non-defective monitoring
+- Visual data export capabilities
+- Session-based prediction tracking
 """
 
 import io
@@ -58,8 +39,10 @@ from PyQt5.QtWidgets import (QApplication, QComboBox, QDialog, QFileDialog,
                              QHBoxLayout, QLabel, QMessageBox, QProgressBar,
                              QProgressDialog, QPushButton, QStackedWidget,
                              QTextEdit, QVBoxLayout, QWidget, QFrame, QGroupBox,
-                             QSizePolicy, QScrollArea, QSlider, QSpinBox)
+                             QSizePolicy, QScrollArea, QSlider, QSpinBox, QLineEdit,
+                             QInputDialog)
 import torch
+import torch.nn as nn
 from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 import torchvision.models as models
@@ -74,14 +57,6 @@ try:
 except ImportError:
     MATPLOTLIB_AVAILABLE = False
     print("Note: matplotlib not available. Visual charts will be text-based.")
-
-# Import visual data exporter
-try:
-    from visual_data_export import VisualDataExporter
-    VISUAL_EXPORT_AVAILABLE = True
-except ImportError:
-    VISUAL_EXPORT_AVAILABLE = False
-    print("Visual data export not available")
 
 # Environment setup
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = '/usr/lib/x86_64-linux-gnu/qt6/plugins'
@@ -98,6 +73,36 @@ SESSION_STATE_PATH = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), "session_state.json")
 PREDICTIONS_STORAGE_PATH = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), "predictions_log.json")
+
+
+class DefectClassifier(nn.Module):
+    """
+    Enhanced DefectClassifier class compatible with various architectures
+    """
+    def __init__(self, num_classes=2, architecture='resnet18'):
+        super(DefectClassifier, self).__init__()
+        self.num_classes = num_classes
+        self.architecture = architecture
+        
+        if architecture == 'resnet18':
+            self.backbone = models.resnet18(weights='IMAGENET1K_V1')
+            self.backbone.fc = nn.Linear(self.backbone.fc.in_features, num_classes)
+        elif architecture == 'resnet34':
+            self.backbone = models.resnet34(weights='IMAGENET1K_V1')
+            self.backbone.fc = nn.Linear(self.backbone.fc.in_features, num_classes)
+        elif architecture == 'resnet50':
+            self.backbone = models.resnet50(weights='IMAGENET1K_V1')
+            self.backbone.fc = nn.Linear(self.backbone.fc.in_features, num_classes)
+        elif architecture == 'mobilenet_v2':
+            self.backbone = models.mobilenet_v2(weights='IMAGENET1K_V1')
+            self.backbone.classifier[1] = nn.Linear(self.backbone.classifier[1].in_features, num_classes)
+        else:
+            # Default to ResNet18
+            self.backbone = models.resnet18(weights='IMAGENET1K_V1')
+            self.backbone.fc = nn.Linear(self.backbone.fc.in_features, num_classes)
+        
+    def forward(self, x):
+        return self.backbone(x)
 
 
 class PredictionStorage:
@@ -382,8 +387,6 @@ def save_session_on_close(ui_name="image_classification"):
     except Exception as e:
         print(f"Error saving session state on close: {e}")
 
-# ...existing code...
-
 
 class ClassificationDashboard(QWidget):
     """Dashboard for displaying classification results and statistics"""
@@ -553,37 +556,6 @@ class ClassificationDashboard(QWidget):
 
         self.recent_list_widget.updateGeometry()
 
-    def save_report(self):
-        """Save classification report to JSON"""
-        try:
-            report = {
-                "timestamp": datetime.now().isoformat(),
-                "dashboard_type": self.dashboard_type,
-                "recent_classifications": self.recent_classifications
-            }
-
-            # Load existing reports
-            if os.path.exists(REPORTS_STORAGE_PATH):
-                with open(REPORTS_STORAGE_PATH, 'r') as f:
-                    try:
-                        existing_reports = json.load(f)
-                    except json.JSONDecodeError:
-                        existing_reports = []
-            else:
-                existing_reports = []
-
-            # Limit reports to avoid file size issues
-            if len(existing_reports) >= 1000:
-                existing_reports = existing_reports[-999:]
-
-            existing_reports.append(report)
-
-            with open(REPORTS_STORAGE_PATH, 'w') as f:
-                json.dump(existing_reports, f, indent=4)
-
-        except Exception as e:
-            print(f"Error saving report: {e}")
-
 
 class CameraWorker(QObject):
     """Enhanced camera worker with motion detection and stationary frame prediction"""
@@ -592,13 +564,14 @@ class CameraWorker(QObject):
     prediction_ready = pyqtSignal(str, float)
     motion_status_changed = pyqtSignal(bool)  # New signal for motion status
 
-    def __init__(self, model=None, transform=None, class_names=None):
+    def __init__(self, model=None, transform=None, class_names=None, idx_to_class=None):
         super().__init__()
         self.running = True
         self.capture = None
         self.model = model
         self.transform = transform
         self.class_names = class_names
+        self.idx_to_class = idx_to_class
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
         # Motion detection parameters
@@ -612,22 +585,6 @@ class CameraWorker(QObject):
         self.is_motion_detected = False
         self.frame_count = 0
         self.last_prediction_frame = None
-        
-        # Settings file for camera index
-        self.settings_file = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), "inspection_settings.json")
-
-    def get_selected_camera_index(self):
-        """Get camera index from settings"""
-        try:
-            if os.path.exists(self.settings_file):
-                with open(self.settings_file, 'r') as f:
-                    settings = json.load(f)
-                    return settings.get('selected_camera_index', 0)
-            return 0
-        except Exception as e:
-            print(f"Error reading camera settings: {e}")
-            return 0
 
     def detect_motion(self, current_frame):
         """
@@ -667,10 +624,6 @@ class CameraWorker(QObject):
             # Determine if motion is detected based on threshold
             motion_detected = motion_percentage > self.motion_sensitivity
             
-            # Debug information (can be removed in production)
-            if motion_detected:
-                print(f"Motion detected: {motion_percentage:.4f} > {self.motion_sensitivity}")
-            
             return motion_detected
             
         except Exception as e:
@@ -690,17 +643,16 @@ class CameraWorker(QObject):
     def run(self):
         """Main camera loop with motion detection"""
         try:
-            camera_index = self.get_selected_camera_index()
-            print(f"Using camera index: {camera_index}")
+            print("📹 Starting camera feed...")
 
-            self.capture = cv2.VideoCapture(camera_index)
+            self.capture = cv2.VideoCapture(0)
+            if not self.capture.isOpened():
+                print("Failed to open camera 0, trying camera 1")
+                self.capture = cv2.VideoCapture(1)
+
             self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
             self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
             self.capture.set(cv2.CAP_PROP_BUFFERSIZE, 1)
-
-            if not self.capture.isOpened():
-                print(f"Failed to open camera {camera_index}, trying default camera 0")
-                self.capture = cv2.VideoCapture(0)
 
             print("📹 Camera started with motion detection enabled")
             print(f"🎯 Predictions will only occur when camera is stationary for {self.min_stationary_frames} frames")
@@ -721,11 +673,8 @@ class CameraWorker(QObject):
                     self.motion_status_changed.emit(motion_detected)
                     
                     if motion_detected:
-                        print("🏃 Motion detected - predictions paused")
                         self.stationary_frame_count = 0
-                    else:
-                        print("🛑 Camera stationary - waiting for stable frames")
-
+                    
                 # Update stationary frame count
                 if not motion_detected:
                     self.stationary_frame_count += 1
@@ -750,7 +699,6 @@ class CameraWorker(QObject):
                     
                     # Only predict every 30 frames when stationary to avoid too frequent predictions
                     if self.stationary_frame_count % 30 == 0:
-                        print(f"🎯 Making prediction on stationary frame {self.frame_count}")
                         self.predict_frame(frame)
 
                 # Small delay to prevent excessive CPU usage
@@ -792,22 +740,19 @@ class CameraWorker(QObject):
             if motion_detected:
                 color = (255, 100, 100)  # Red for motion
                 text = "MOTION DETECTED"
-                status_symbol = "🏃"
             elif self.stationary_frame_count < self.min_stationary_frames:
                 color = (255, 255, 100)  # Yellow for stabilizing
                 text = f"STABILIZING ({self.stationary_frame_count}/{self.min_stationary_frames})"
-                status_symbol = "⏳"
             else:
                 color = (100, 255, 100)  # Green for ready
                 text = "READY FOR PREDICTION"
-                status_symbol = "✅"
             
             # Draw semi-transparent overlay rectangle
             overlay = overlay_image.copy()
             cv2.rectangle(overlay, (x_start, y_start), (x_end, y_end), color, -1)
             overlay_image = cv2.addWeighted(overlay_image, 0.7, overlay, 0.3, 0)
             
-            # Add text (Note: OpenCV doesn't support emoji, so we'll use text only)
+            # Add text
             cv2.putText(overlay_image, text, (x_start + 5, y_start + 20),
                        cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 0), 1, cv2.LINE_AA)
             
@@ -835,12 +780,15 @@ class CameraWorker(QObject):
                 predicted_idx = torch.argmax(probabilities).item()
                 probability = probabilities[predicted_idx].item()
 
-                if predicted_idx < len(self.class_names):
+                # Use idx_to_class mapping if available
+                if self.idx_to_class and predicted_idx in self.idx_to_class:
+                    predicted_class = self.idx_to_class[predicted_idx]
+                elif predicted_idx < len(self.class_names):
                     predicted_class = self.class_names[predicted_idx]
                 else:
                     predicted_class = f"Class {predicted_idx}"
 
-                print(f"🎯 Prediction made: {predicted_class} ({probability:.2%}) - Frame: {self.frame_count}")
+                print(f"🎯 Prediction: {predicted_class} ({probability:.2%}) - Frame: {self.frame_count}")
                 self.prediction_ready.emit(predicted_class, probability)
 
         except Exception as e:
@@ -849,6 +797,85 @@ class CameraWorker(QObject):
     def stop(self):
         """Stop camera worker"""
         self.running = False
+
+
+class ClassNamesDialog(QDialog):
+    """Custom dialog for entering class names"""
+    
+    def __init__(self, num_classes, current_names, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Customize Class Names")
+        self.setModal(True)
+        self.resize(400, min(600, 100 + num_classes * 35))
+        
+        layout = QVBoxLayout()
+        
+        # Instructions
+        instruction = QLabel(f"Enter names for {num_classes} classes:")
+        instruction.setStyleSheet("font-weight: bold; margin-bottom: 10px;")
+        layout.addWidget(instruction)
+        
+        # Scroll area for many classes
+        scroll_area = QScrollArea()
+        scroll_widget = QWidget()
+        scroll_layout = QVBoxLayout(scroll_widget)
+        
+        # Input fields
+        self.line_edits = []
+        for i in range(num_classes):
+            line_edit = QLineEdit()
+            line_edit.setPlaceholderText(f"Class {i} name...")
+            line_edit.setText(current_names[i] if i < len(current_names) else f"class_{i}")
+            self.line_edits.append(line_edit)
+            scroll_layout.addWidget(line_edit)
+        
+        scroll_area.setWidget(scroll_widget)
+        scroll_area.setWidgetResizable(True)
+        layout.addWidget(scroll_area)
+        
+        # Buttons
+        button_layout = QHBoxLayout()
+        
+        preset_button = QPushButton("Use Defect Presets")
+        preset_button.clicked.connect(self.use_defect_presets)
+        
+        cancel_button = QPushButton("Cancel")
+        cancel_button.clicked.connect(self.reject)
+        
+        ok_button = QPushButton("OK")
+        ok_button.clicked.connect(self.accept)
+        
+        button_layout.addWidget(preset_button)
+        button_layout.addStretch()
+        button_layout.addWidget(cancel_button)
+        button_layout.addWidget(ok_button)
+        
+        layout.addLayout(button_layout)
+        self.setLayout(layout)
+    
+    def use_defect_presets(self):
+        """Fill with common defect detection class names"""
+        if len(self.line_edits) == 10:
+            presets = [
+                'normal', 'clamp_miss', 'screw_miss', 'scratch', 'dent', 
+                'crack', 'spot', 'hole', 'incomplete', 'damaged'
+            ]
+        elif len(self.line_edits) == 2:
+            presets = ['normal', 'defective']
+        elif len(self.line_edits) == 6:
+            presets = ['normal', 'clamp_miss', 'screw_miss', 'scratch', 'dent', 'crack']
+        elif len(self.line_edits) == 8:
+            presets = ['normal', 'clamp_miss', 'screw_miss', 'scratch', 'dent', 'crack', 'spot', 'hole']
+        else:
+            presets = [f"defect_type_{i}" for i in range(len(self.line_edits))]
+            presets[0] = 'normal'  # First class is usually normal
+        
+        for i, preset in enumerate(presets):
+            if i < len(self.line_edits):
+                self.line_edits[i].setText(preset)
+    
+    def get_class_names(self):
+        return [line_edit.text().strip() or f"class_{i}" for i, line_edit in enumerate(self.line_edits)]
 
 
 class ImageClassiUI(QWidget):
@@ -861,6 +888,8 @@ class ImageClassiUI(QWidget):
         self.bad_dir = bad_dir
         self.model = None
         self.class_names = []
+        self.class_mapping = {}
+        self.idx_to_class = {}
         self.img_height, self.img_width = 224, 224
         self.camera_feed_running = False
 
@@ -963,7 +992,6 @@ class ImageClassiUI(QWidget):
             font-size: 16px;
         """)
         self.camera_label.setText("Camera feed will appear here when started")
-        self.camera_label.setScaledContents(False)  # Prevent stretching
         camera_layout.addWidget(self.camera_label, 0, Qt.AlignCenter)
 
         # Control panel
@@ -1045,38 +1073,10 @@ class ImageClassiUI(QWidget):
         # Export button for prediction data
         self.export_button = QPushButton("Export Session Data")
         self.export_button.clicked.connect(self.export_session_data)
-        self.export_button.setStyleSheet("""
-            QPushButton {
-                background-color: #17a2b8;
-                color: white;
-                font-weight: bold;
-                padding: 8px 16px;
-                border-radius: 5px;
-                font-size: 14px;
-                min-width: 120px;
-            }
-            QPushButton:hover {
-                background-color: #138496;
-            }
-        """)
 
         # Visual export button
         self.visual_export_button = QPushButton("Export Visual Report")
         self.visual_export_button.clicked.connect(self.export_visual_data)
-        self.visual_export_button.setStyleSheet("""
-            QPushButton {
-                background-color: #6f42c1;
-                color: white;
-                font-weight: bold;
-                padding: 8px 16px;
-                border-radius: 5px;
-                font-size: 14px;
-                min-width: 120px;
-            }
-            QPushButton:hover {
-                background-color: #5a359b;
-            }
-        """)
 
         button_layout.addStretch(1)
         button_layout.addWidget(self.start_camera_button)
@@ -1110,11 +1110,6 @@ class ImageClassiUI(QWidget):
         self.status_label = QLabel("Ready")
         self.status_label.setStyleSheet("color: #6c757d; font-size: 12px;")
         status_layout.addWidget(self.status_label)
-
-        # Model status display (hidden but functional)
-        self.output_text = QTextEdit(self)
-        self.output_text.setReadOnly(True)
-        self.output_text.setVisible(False)  # Hide the detailed output
 
         content_layout.addWidget(status_bar)
         main_layout.addWidget(content_widget)
@@ -1185,9 +1180,14 @@ class ImageClassiUI(QWidget):
         QApplication.processEvents()
 
     def auto_load_latest_model(self):
-        """Automatically load the latest trained model"""
+        """Automatically load the best_model.pth or latest trained model"""
+        # First try to load best_model.pth
+        if os.path.exists("best_model.pth"):
+            self.display_message("Loading best_model.pth...")
+            return self.load_model("best_model.pth")
+        
+        # If best_model.pth not found, look for other .pth files
         model_files = glob.glob("*.pth")
-
         if not model_files:
             self.display_message("No trained model (.pth files) found in current directory.")
             return False
@@ -1197,35 +1197,150 @@ class ImageClassiUI(QWidget):
         return self.load_model(latest_model)
 
     def load_model(self, model_path):
-        """Load PyTorch model"""
+        """Enhanced model loading with best_model.pth support"""
         if not os.path.exists(model_path):
             self.display_message(f"Model file not found: {model_path}")
             return False
 
         try:
+            self.display_message(f"Loading model from: {model_path}")
+            
+            # Load the checkpoint
             checkpoint = torch.load(model_path, map_location=device)
-            num_classes = checkpoint.get('num_classes', 2)
-            self.class_names = checkpoint.get(
-                'class_names', [f"class_{i}" for i in range(num_classes)])
+            
+            # Handle different checkpoint formats
+            if isinstance(checkpoint, dict):
+                
+                # Check for class mapping (best_model.pth format)
+                if 'class_mapping' in checkpoint:
+                    self.display_message("✓ Found class_mapping in checkpoint (best_model.pth format)")
+                    self.class_mapping = checkpoint['class_mapping']
+                    self.idx_to_class = {v: k for k, v in self.class_mapping.items()}
+                    num_classes = len(self.class_mapping)
+                    self.class_names = list(self.class_mapping.keys())
+                    
+                    # Load model state
+                    if 'model_state_dict' in checkpoint:
+                        model_state_dict = checkpoint['model_state_dict']
+                    else:
+                        model_state_dict = checkpoint
+                        
+                    # Display additional info
+                    if 'epoch' in checkpoint:
+                        self.display_message(f"Model from epoch: {checkpoint['epoch']}")
+                    if 'val_accuracy' in checkpoint:
+                        self.display_message(f"Validation accuracy: {checkpoint['val_accuracy']:.2f}%")
+                
+                # Handle other checkpoint formats
+                elif 'model_state_dict' in checkpoint:
+                    self.display_message("Loading from standard checkpoint format")
+                    model_state_dict = checkpoint['model_state_dict']
+                    
+                    # Try to get number of classes from the model structure
+                    num_classes = self.detect_num_classes_from_state_dict(model_state_dict)
+                    
+                    # Check for other class name keys
+                    class_keys = ['class_names', 'classes', 'idx_to_class']
+                    for key in class_keys:
+                        if key in checkpoint:
+                            if isinstance(checkpoint[key], list):
+                                self.class_names = checkpoint[key]
+                                self.class_mapping = {name: idx for idx, name in enumerate(self.class_names)}
+                                self.idx_to_class = {idx: name for idx, name in enumerate(self.class_names)}
+                            elif isinstance(checkpoint[key], dict):
+                                if key == 'idx_to_class':
+                                    self.idx_to_class = checkpoint[key]
+                                    self.class_mapping = {v: k for k, v in self.idx_to_class.items()}
+                                    self.class_names = [self.idx_to_class[i] for i in sorted(self.idx_to_class.keys())]
+                            break
+                    
+                    # If no class names found, create generic ones
+                    if not self.class_names:
+                        self.class_names = [f"class_{i}" for i in range(num_classes)]
+                        self.class_mapping = {name: idx for idx, name in enumerate(self.class_names)}
+                        self.idx_to_class = {idx: name for idx, name in enumerate(self.class_names)}
+                        
+                else:
+                    # Assume entire checkpoint is state dict
+                    model_state_dict = checkpoint
+                    num_classes = self.detect_num_classes_from_state_dict(model_state_dict)
+                    self.class_names = [f"class_{i}" for i in range(num_classes)]
+                    self.class_mapping = {name: idx for idx, name in enumerate(self.class_names)}
+                    self.idx_to_class = {idx: name for idx, name in enumerate(self.class_names)}
+                    
+            else:
+                # Entire model object
+                self.model = checkpoint
+                self.model.to(device)
+                self.model.eval()
+                
+                # Try to get number of classes
+                if hasattr(self.model, 'fc'):
+                    num_classes = self.model.fc.out_features
+                elif hasattr(self.model, 'classifier'):
+                    if hasattr(self.model.classifier, '1'):
+                        num_classes = self.model.classifier[1].out_features
+                    else:
+                        num_classes = self.model.classifier[-1].out_features
+                else:
+                    num_classes = 2
+                
+                self.class_names = [f"class_{i}" for i in range(num_classes)]
+                self.class_mapping = {name: idx for idx, name in enumerate(self.class_names)}
+                self.idx_to_class = {idx: name for idx, name in enumerate(self.class_names)}
+                
+                self.display_message(f"✓ Model loaded: {os.path.basename(model_path)} | Classes: {num_classes}")
+                self.display_message(f"✓ Classes: {', '.join(self.class_names)}")
+                self.start_camera_button.setEnabled(True)
+                return True
 
-            self.model = models.mobilenet_v2(pretrained=True)
-            self.model.classifier[1] = torch.nn.Linear(
-                self.model.classifier[1].in_features, num_classes)
-
-            self.model.load_state_dict(checkpoint['model_state_dict'])
+            # Create model architecture
+            self.model = DefectClassifier(num_classes)
+            
+            # Load state dict
+            try:
+                # Remove any 'backbone.' prefix if present
+                cleaned_state_dict = {}
+                for key, value in model_state_dict.items():
+                    if key.startswith('backbone.'):
+                        cleaned_state_dict[key] = value
+                    else:
+                        cleaned_state_dict[f'backbone.{key}'] = value
+                
+                self.model.load_state_dict(cleaned_state_dict, strict=False)
+            except:
+                # Try direct loading
+                self.model.load_state_dict(model_state_dict, strict=False)
+                
             self.model.to(device)
             self.model.eval()
 
-            self.display_message(
-                f"✓ Model loaded: {os.path.basename(model_path)} | Classes: {', '.join(self.class_names)}")
+            # Display success message
+            self.display_message(f"✓ Model loaded: {os.path.basename(model_path)}")
+            self.display_message(f"✓ Classes ({num_classes}): {', '.join(self.class_names)}")
+            
             self.start_camera_button.setEnabled(True)
             return True
 
         except Exception as e:
             self.model = None
-            self.display_message(f"✗ Error loading model: {e}")
+            error_msg = f"✗ Error loading model: {e}"
+            self.display_message(error_msg)
+            print(f"Full error details: {e}")
+            
             QMessageBox.critical(self, "Model Load Error", f"Failed to load model.\nError: {e}")
             return False
+
+    def detect_num_classes_from_state_dict(self, state_dict):
+        """Detect number of classes from model state dict"""
+        try:
+            # Look for final layer weights
+            for key, tensor in state_dict.items():
+                if any(layer_name in key for layer_name in ['fc.weight', 'classifier.weight', 'classifier.1.weight']):
+                    return tensor.shape[0]
+            return 2  # Default fallback
+        except:
+            return 2
 
     def start_camera_feed(self):
         """Start camera feed for real-time classification"""
@@ -1234,46 +1349,21 @@ class ImageClassiUI(QWidget):
                 QMessageBox.warning(self, "No Model", "Please load a trained model first.")
             return
 
-        # Disable the Start Camera button immediately and change its style
+        # Disable the Start Camera button immediately
         self.start_camera_button.setEnabled(False)
-        self.start_camera_button.setStyleSheet("""
-            QPushButton {
-                background-color: #cccccc;
-                color: white;
-                font-weight: bold;
-                padding: 12px 24px;
-                border-radius: 5px;
-                font-size: 16px;
-                min-width: 150px;
-            }
-        """)
-
         self.camera_feed_running = True
         self.display_message("Starting camera feed...")
 
-        # Enable the Stop Camera button and reset its style
+        # Enable the Stop Camera button
         self.stop_camera_button.setEnabled(True)
-        self.stop_camera_button.setStyleSheet("""
-            QPushButton {
-                background-color: #f44336;
-                color: white;
-                font-weight: bold;
-                padding: 12px 24px;
-                border-radius: 5px;
-                font-size: 16px;
-                min-width: 150px;
-            }
-            QPushButton:hover {
-                background-color: #d32f2f;
-            }
-        """)
 
         # Start camera worker thread
         self.camera_thread = QThread()
         self.camera_worker = CameraWorker(
             model=self.model,
             transform=self.transform,
-            class_names=self.class_names
+            class_names=self.class_names,
+            idx_to_class=self.idx_to_class
         )
         self.camera_worker.moveToThread(self.camera_thread)
 
@@ -1291,20 +1381,8 @@ class ImageClassiUI(QWidget):
         if not self.camera_feed_running:
             return
 
-        # Disable the Stop Camera button immediately and change its style
+        # Disable the Stop Camera button immediately
         self.stop_camera_button.setEnabled(False)
-        self.stop_camera_button.setStyleSheet("""
-            QPushButton {
-                background-color: #cccccc;
-                color: white;
-                font-weight: bold;
-                padding: 12px 24px;
-                border-radius: 5px;
-                font-size: 16px;
-                min-width: 150px;
-            }
-        """)
-
         self.display_message("Stopping camera feed...")
         self.camera_feed_running = False
 
@@ -1315,23 +1393,8 @@ class ImageClassiUI(QWidget):
             self.camera_thread.quit()
             self.camera_thread.wait()
 
-        # Enable the Start Camera button and reset its style
+        # Enable the Start Camera button
         self.start_camera_button.setEnabled(True)
-        self.start_camera_button.setStyleSheet("""
-            QPushButton {
-                background-color: #4CAF50;
-                color: white;
-                font-weight: bold;
-                padding: 12px 24px;
-                border-radius: 5px;
-                font-size: 16px;
-                min-width: 150px;
-            }
-            QPushButton:hover {
-                background-color: #45a049;
-            }
-        """)
-
         self.display_message("Camera feed stopped")
         self.camera_prediction_label.setText("Prediction: Camera stopped")
 
@@ -1390,44 +1453,122 @@ class ImageClassiUI(QWidget):
         if prediction_id:
             print(f"✓ Prediction stored with ID: {prediction_id}")
 
-        # Color coding based on confidence
-        if probability >= 0.8:
-            color = "#28a745"  # Green for high confidence
-        elif probability >= 0.6:
-            color = "#ffc107"  # Yellow for medium confidence
-        else:
-            color = "#dc3545"  # Red for low confidence
-
-        self.camera_prediction_label.setStyleSheet(f"""
-            font-size: 24px;
-            font-weight: bold;
-            color: black;  /* Set text color to black */
-            padding: 15px;
-            margin: 10px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            border: 2px solid #e9ecef;
-        """)
-
-        # Update only the relevant dashboard
-        if "non_defective" in predicted_class.lower():
+        # Update only the relevant dashboard based on actual class names
+        if predicted_class.lower() in ['normal', 'good', 'ok', 'non_defective']:
             self.left_dashboard.update_classification(predicted_class, probability)
-        elif "defective" in predicted_class.lower():
+        else:
+            # All other classes (defects) go to right dashboard
             self.right_dashboard.update_classification(predicted_class, probability)
 
     def update_motion_status(self, motion_detected):
         """Update UI or status based on motion detection"""
         if motion_detected:
             self.display_message("Motion detected - predictions paused")
-            self.camera_prediction_label.setText("Prediction: Motion detected")
         else:
             self.display_message("Camera stationary - ready for prediction")
-            self.camera_prediction_label.setText("Prediction: Camera stationary")
 
-    def show_demo_feed_ui(self):
-        """Navigate back to demo feed"""
-        if self.parentWidget() and isinstance(self.parentWidget(), QStackedWidget):
-            self.parentWidget().setCurrentIndex(1)
+    def export_visual_data(self):
+        """Export visual data - simple text-based export"""
+        try:
+            stats = self.prediction_storage.get_session_statistics()
+            total = stats.get("total", 0)
+            
+            if total == 0:
+                QMessageBox.information(
+                    self,
+                    "No Data",
+                    "No predictions available to export. Start camera feed and make some predictions first."
+                )
+                return
+            
+            # Get file path from user
+            file_dialog = QFileDialog()
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            default_filename = f"visual_export_{timestamp}.txt"
+            
+            filepath, _ = file_dialog.getSaveFileName(
+                self,
+                "Export Visual Report",
+                default_filename,
+                "Text Files (*.txt);;All Files (*)"
+            )
+            
+            if not filepath:
+                return
+            
+            # Load session data
+            with open(self.prediction_storage.storage_path, 'r') as f:
+                data = json.load(f)
+            
+            if self.prediction_storage.session_id not in data["sessions"]:
+                QMessageBox.warning(self, "Export Failed", "Session data not found.")
+                return
+            
+            predictions = data["sessions"][self.prediction_storage.session_id]["predictions"]
+            classes = [p["predicted_class"] for p in predictions]
+            confidences = [p["confidence"] for p in predictions]
+            
+            # Create simple visual text export
+            with open(filepath, 'w') as f:
+                f.write("SAKAR VISION AI - VISUAL EXPORT REPORT\n")
+                f.write("=" * 50 + "\n\n")
+                
+                # Summary
+                normal_keywords = ['normal', 'good', 'ok', 'non_defective']
+                normal_count = sum(1 for c in classes if c.lower() in normal_keywords)
+                defective_count = len(classes) - normal_count
+                
+                f.write("SUMMARY:\n")
+                f.write(f"Total Predictions: {len(classes)}\n")
+                f.write(f"Normal/Good: {normal_count}\n")
+                f.write(f"Defective: {defective_count}\n")
+                f.write(f"Average Confidence: {np.mean(confidences):.2%}\n\n")
+                
+                # Class breakdown
+                class_counts = {}
+                for cls in classes:
+                    class_counts[cls] = class_counts.get(cls, 0) + 1
+                
+                f.write("CLASS BREAKDOWN:\n")
+                for cls, count in sorted(class_counts.items()):
+                    percentage = (count / len(classes)) * 100
+                    f.write(f"{cls}: {count} ({percentage:.1f}%)\n")
+                f.write("\n")
+                
+                # Visual representation
+                f.write("VISUAL REPRESENTATION:\n")
+                f.write("(N=Normal/Good, D=Defective)\n\n")
+                
+                for i, cls in enumerate(classes):
+                    if i % 10 == 0 and i > 0:
+                        f.write("\n")
+                    
+                    if cls.lower() in normal_keywords:
+                        f.write("[N] ")
+                    else:
+                        f.write("[D] ")
+                
+                f.write("\n\n")
+                
+                # Detailed list
+                f.write("DETAILED PREDICTIONS:\n")
+                f.write("-" * 40 + "\n")
+                for i, (cls, conf) in enumerate(zip(classes, confidences), 1):
+                    f.write(f"{i:3d}. {cls:15s} ({conf:.1%})\n")
+            
+            QMessageBox.information(
+                self,
+                "Export Successful",
+                f"Visual report created:\n{filepath}"
+            )
+            
+        except Exception as e:
+            print(f"Error in visual export: {e}")
+            QMessageBox.critical(
+                self,
+                "Export Error",
+                f"An error occurred during export:\n{e}"
+            )
 
     def closeEvent(self, event):
         """Handle application close event"""
@@ -1451,231 +1592,9 @@ class ImageClassiUI(QWidget):
         finally:
             event.accept()
 
-    def export_visual_data(self):
-        """Export visual data using the VisualDataExporter"""
-        try:
-            if not VISUAL_EXPORT_AVAILABLE:
-                # Fallback to simple text export
-                self.export_simple_text_data()
-                return
-            
-            # Get current session data
-            stats = self.prediction_storage.get_session_statistics()
-            total = stats.get("total", 0)
-            
-            if total == 0:
-                QMessageBox.information(
-                    self,
-                    "No Data",
-                    "No predictions available to export. Start camera feed and make some predictions first."
-                )
-                return
-            
-            # Load session predictions
-            exporter = VisualDataExporter(self.prediction_storage.storage_path)
-            predictions = exporter.load_session_data(self.prediction_storage.session_id)
-            
-            if not predictions:
-                QMessageBox.warning(
-                    self,
-                    "Export Failed",
-                    "Failed to load session data for export."
-                )
-                return
-            
-            # Create progress dialog
-            progress = QProgressDialog("Creating visual report...", "Cancel", 0, 100, self)
-            progress.setWindowModality(Qt.WindowModal)
-            progress.show()
-            QApplication.processEvents()
-            
-            # Create visual summary
-            progress.setValue(25)
-            QApplication.processEvents()
-            
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            
-            try:
-                # Try to create PDF visual report
-                progress.setLabelText("Generating charts...")
-                progress.setValue(50)
-                QApplication.processEvents()
-                
-                pdf_path = exporter.create_visual_summary(predictions, f"visual_report_{timestamp}.pdf")
-                
-                progress.setValue(75)
-                QApplication.processEvents()
-                
-                # Also create simple text export
-                text_path = exporter.create_simple_text_export(predictions, f"simple_report_{timestamp}.txt")
-                
-                progress.setValue(100)
-                progress.close()
-                
-                if pdf_path and text_path:
-                    QMessageBox.information(
-                        self,
-                        "Export Successful",
-                        f"Visual reports created successfully:\n\n"
-                        f"PDF Report: {pdf_path}\n"
-                        f"Text Report: {text_path}\n\n"
-                        f"Reports saved in: {exporter.output_dir}"
-                    )
-                else:
-                    QMessageBox.warning(
-                        self,
-                        "Partial Export",
-                        "Some reports could not be created. Check console for details."
-                    )
-                    
-            except Exception as chart_error:
-                progress.close()
-                print(f"Chart creation error: {chart_error}")
-                
-                # Fallback to text-only export
-                progress = QProgressDialog("Creating text report...", "Cancel", 0, 100, self)
-                progress.setWindowModality(Qt.WindowModal)
-                progress.show()
-                progress.setValue(50)
-                QApplication.processEvents()
-                
-                text_path = exporter.create_simple_text_export(predictions, f"simple_report_{timestamp}.txt")
-                
-                progress.setValue(100)
-                progress.close()
-                
-                if text_path:
-                    QMessageBox.information(
-                        self,
-                        "Text Export Successful",
-                        f"Text report created successfully:\n{text_path}\n\n"
-                        f"Note: Visual charts could not be created due to missing dependencies."
-                    )
-                else:
-                    QMessageBox.critical(
-                        self,
-                        "Export Failed",
-                        "Failed to create export reports. Check console for details."
-                    )
-                    
-        except Exception as e:
-            print(f"Error in visual export: {e}")
-            QMessageBox.critical(
-                self,
-                "Export Error",
-                f"An error occurred during visual export:\n{e}"
-            )
 
-    def export_simple_text_data(self):
-        """Simple text export when visual tools are not available"""
-        try:
-            stats = self.prediction_storage.get_session_statistics()
-            total = stats.get("total", 0)
-            
-            if total == 0:
-                QMessageBox.information(
-                    self,
-                    "No Data",
-                    "No predictions available to export."
-                )
-                return
-            
-            # Get file path from user
-            file_dialog = QFileDialog()
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            default_filename = f"simple_visual_export_{timestamp}.txt"
-            
-            filepath, _ = file_dialog.getSaveFileName(
-                self,
-                "Export Simple Visual Report",
-                default_filename,
-                "Text Files (*.txt);;All Files (*)"
-            )
-            
-            if not filepath:
-                return
-            
-            # Load session data manually
-            with open(self.prediction_storage.storage_path, 'r') as f:
-                data = json.load(f)
-            
-            if self.prediction_storage.session_id not in data["sessions"]:
-                QMessageBox.warning(self, "Export Failed", "Session data not found.")
-                return
-            
-            predictions = data["sessions"][self.prediction_storage.session_id]["predictions"]
-            classes = [p["predicted_class"] for p in predictions]
-            confidences = [p["confidence"] for p in predictions]
-            
-            # Create simple visual text export
-            with open(filepath, 'w') as f:
-                f.write("SAKAR VISION AI - SIMPLE VISUAL EXPORT\n")
-                f.write("=" * 50 + "\n\n")
-                
-                # Summary
-                defective_count = sum(1 for c in classes if 'defective' in c.lower() and 'non' not in c.lower())
-                non_defective_count = len(classes) - defective_count
-                
-                f.write("SUMMARY:\n")
-                f.write(f"Total Predictions: {len(classes)}\n")
-                f.write(f"Defective: {defective_count}\n")
-                f.write(f"Non-Defective: {non_defective_count}\n")
-                f.write(f"Average Confidence: {np.mean(confidences):.2%}\n\n")
-                
-                # Visual sequence - exactly what you requested
-                f.write("VISUAL SEQUENCE:\n")
-                f.write("(D=Defective, N=Non-Defective)\n\n")
-                
-                visual_sequence = []
-                for i, cls in enumerate(classes, 1):
-                    if 'defective' in cls.lower() and 'non' not in cls.lower():
-                        visual_sequence.append(f"{i}=D")
-                    else:
-                        visual_sequence.append(f"{i}=N")
-                
-                # Write sequence in groups of 10
-                for i in range(0, len(visual_sequence), 10):
-                    line_items = visual_sequence[i:i+10]
-                    f.write(", ".join(line_items))
-                    if i + 10 < len(visual_sequence):
-                        f.write(",")
-                    f.write("\n")
-                
-                f.write("\n")
-                
-                # ASCII art representation
-                f.write("ASCII VISUAL REPRESENTATION:\n")
-                f.write("-" * 50 + "\n")
-                
-                for i, cls in enumerate(classes):
-                    if i % 10 == 0 and i > 0:
-                        f.write("\n")
-                    
-                    if 'defective' in cls.lower() and 'non' not in cls.lower():
-                        f.write("[X] ")  # X for defective
-                    else:
-                        f.write("[O] ")  # O for non-defective
-                
-                f.write("\n\n")
-                f.write("Legend: [X] = Defective, [O] = Non-Defective\n\n")
-                
-                # Detailed list
-                f.write("DETAILED LIST:\n")
-                f.write("-" * 40 + "\n")
-                for i, (cls, conf) in enumerate(zip(classes, confidences), 1):
-                    status = "DEFECTIVE" if 'defective' in cls.lower() and 'non' not in cls.lower() else "NON-DEFECTIVE"
-                    f.write(f"{i:3d}. {status:15s} ({conf:.1%})\n")
-            
-            QMessageBox.information(
-                self,
-                "Export Successful",
-                f"Simple visual report created:\n{filepath}"
-            )
-            
-        except Exception as e:
-            print(f"Error in simple text export: {e}")
-            QMessageBox.critical(
-                self,
-                "Export Error",
-                f"An error occurred during export:\n{e}"
-            )
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = ImageClassiUI()
+    window.show()
+    sys.exit(app.exec_())
